@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class callEndRecord:
 
     id = None
@@ -6,6 +8,9 @@ class callEndRecord:
     call_id = None
 
     def serialize(self):
+
+        if isinstance(self.timestamp, datetime):
+            self.timestamp = self.timestamp.isoformat()
 
         dic = {'id': self.id,
                'type': self.type,
