@@ -12,12 +12,10 @@ from sqlalchemy_db.models import *
 app = Flask(__name__)
 
 @app.route("/phone/getall", methods=['GET'])
-def example():
+def getall_phone():
 
     try:
-        values = request.get_json()
-        phone_number = values.get('number')
-        phones = Phone(phone_number).query.all()
+        phones = Phone().query.all()
         phones_dict = {phones.index(phone): phone.number for phone in phones}
         db_session.commit()
     except IntegrityError as e:
@@ -95,6 +93,35 @@ def update_phone():
 
     return jsonify("it worked"), 200
 
+
+@app.route("/call/getall", methods=['GET'])
+def getall_calls():
+
+    try:
+        calls = Call().query.all()
+        calls_dict = {}
+        calls_list= []
+        for call in calls:
+            calls_dict["id"] = call.id
+            calls_dict["type_start"] = call.type_start
+            calls_dict["timestamp"] = call.timestamp
+            calls_dict["call_id"] = call.call_id
+            calls_dict["source"] = call.source
+            calls_dict["destination"] = call.destination
+            calls_list.append(calls_dict)
+
+        db_session.commit()
+    except IntegrityError as e:
+        print(e)
+        return "ERRO, PK", 400
+    except InvalidRequestError as e:
+        print(e)
+        return "Invalid request", 400
+    except Exception as e:
+        print(e)
+        return "Internal server error", 400
+
+    return jsonify(calls_list), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

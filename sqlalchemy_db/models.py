@@ -31,7 +31,7 @@ class Phone(Base):
 
     number = Column(String, primary_key=True)
 
-    def __init__(self, number):
+    def __init__(self, number="5514111111111"):
         self.number = number
 
     def __repr__(self):
