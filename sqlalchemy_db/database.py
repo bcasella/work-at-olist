@@ -59,6 +59,13 @@ def init_db():
 
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
+    Phone.__table__
+    Phone.__mapper__
+
+    Call.__table__
+    Call.__mapper__
+
+    Base.metadata.create_all(engine)
 
     # Create the fixtures
     phone = Phone(number="5514987654321")
@@ -73,15 +80,3 @@ def init_db():
     call2 = Call(type_start=False, call_id=1)
     db_session.add(call2)
     db_session.commit()
-
-Phone.__table__
-Phone.__mapper__
-
-Call.__table__
-Call.__mapper__
-
-Base.metadata.create_all(engine)
-
-#create_table_phone()
-#create_table_call()
-init_db()

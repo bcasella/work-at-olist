@@ -29,9 +29,16 @@ class Phone(Base):
 
     __tablename__ = "phone"
 
-    number = Column(String, primary_key=True);
+    number = Column(String, primary_key=True)
+
+    def __init__(self, number):
+        self.number = number
 
     def __repr__(self):
         return f"<phone('{number}')>" % (self.number)
 
+    def insert(self, number):
+        pass
 
+    def get_all(self):
+        pass
