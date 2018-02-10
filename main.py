@@ -82,12 +82,15 @@ def update_phone():
         db_session.commit()
 
     except IntegrityError as e:
+        db_session.rollback()
         print(e)
         return "ERRO, PK", 400
     except InvalidRequestError as e:
+        db_session.rollback()
         print(e)
         return "Invalid request", 400
     except Exception as e:
+        db_session.rollback()
         print(e)
         return "Internal server error", 400
 
